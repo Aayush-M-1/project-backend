@@ -6,6 +6,7 @@ import { User } from "../models/user.model.js";
 
 export const verifyJWT = asyncHandler( async (req,res,next) => {
     try {
+        // req.cookies can be accessed because we have used cookie parser middleware in app.js
         // Authorization header: Bearer <accessToken>
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
     
@@ -14,7 +15,8 @@ export const verifyJWT = asyncHandler( async (req,res,next) => {
         }
     
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-    
+        
+        // accessToken has _id, username, fullName, email (see user model)
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
     
         if(!user){
