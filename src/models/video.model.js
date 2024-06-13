@@ -1,5 +1,6 @@
 import mongoose, {Schema} from "mongoose"
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2"
+// videos are displayed in pages, we can't display all the videos together
 
 const videoSchema = new Schema({
     videoFile: {
